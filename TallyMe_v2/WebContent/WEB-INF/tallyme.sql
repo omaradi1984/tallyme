@@ -19,12 +19,11 @@ USE `tallyme` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tallyme`.`USER` (
   `UUID` CHAR(40) NOT NULL,
-  `Id` INT NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
-  `EmailAddress` VARCHAR(45) NULL,
   `Username` VARCHAR(45) NOT NULL,
   `Password` VARCHAR(45) NOT NULL,
+  `EmailAddress` VARCHAR(45) NULL,
   PRIMARY KEY (`UUID`),
   UNIQUE INDEX `Id_UNIQUE` (`Id` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -35,7 +34,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tallyme`.`COUNTLOG` (
   `UUID` CHAR(40) NOT NULL,
-  `Id` INT NOT NULL AUTO_INCREMENT,
   `Timestamp` DATE NULL,
   `Location` VARCHAR(140) NULL,
   `UserUUID` CHAR(40) NOT NULL,
@@ -55,7 +53,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tallyme`.`COUNT` (
   `UUID` CHAR(40) NOT NULL,
-  `Id` INT NOT NULL AUTO_INCREMENT,
   `Timestamp` DATE NULL,
   `CountLogUUID` CHAR(40) NOT NULL,
   PRIMARY KEY (`UUID`),
