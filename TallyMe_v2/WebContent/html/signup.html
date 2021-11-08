@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to tally-me.ca</title>
+    <link rel="stylesheet" type="text/css" href="css/signup-style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+</head>
+<body class="signup">
+<form name="signupForm" class="form" id="signupForm" action="signup" method="POST">
+<fieldset>
+    <legend>
+        <h1>Enter your account details</h1>
+    </legend>
+    <table>
+        <tr>
+          <td class="label"><label for="firstName">First name: <span class="required"></span></label></td>
+          <td><input type="text" id="firstName" name="firstName" class="large" required="required"
+              placeholder="Enter your first name" /></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="lastName">Last name: <span class="required"></span></label></td>
+          <td><input type="text" id="lastName" name="lastName" class="large" required="required"
+              placeholder="Enter your last name" /></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="emailAddress">Email address: <span class="required"></span></label></td>
+          <td><input type="text" id="emailAddress" name="emailAddress" class="large" required="required"
+              placeholder="Enter your email address" /></td>
+        </tr>
+        <tr>
+          <td class="label"><label for="username">Username: <span class="required"></span></label></td>
+          <td><input type="text" id="username" name="username" class="large" required="required"
+              placeholder="Enter your username" /></td>
+        </tr>
+                <tr>
+          <td class="label"><label for="password">Password: <span class="required"></span></label></td>
+          <td><input type="text" id="password" name="password" class="large" required="required"
+              placeholder="Enter your password" /></td>
+        </tr>
+    </table>
+
+<input type="reset" value="Clear"/>
+<input type="submit" value="Create account"/>
+</fieldset>
+    </form>
+</body>
+</html>
