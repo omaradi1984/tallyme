@@ -109,6 +109,7 @@ ul li a:hover .name span{
 
 .title {
 	margin: auto;
+	min-width: max-content;
     margin-bottom: 5ch;
     padding: 1.5ch;
 	color: whitesmoke;

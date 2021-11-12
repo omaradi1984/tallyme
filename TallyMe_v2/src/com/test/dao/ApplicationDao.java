@@ -428,4 +428,34 @@ public class ApplicationDao implements ApplicationService {
 		}
 		return isValidLog;
 	}
+
+	@Override
+	public int readCount(CountLog log) {
+		// TODO Auto-generated method stub
+		int totalCount = 0;
+		
+		try {
+			
+			// get the connection for the database
+			Connection connection = DBConnection.getConnectionToDatabase();
+	
+			// write the select query
+			String sql = "SELECT COUNT(*) AS TotalCount FROM COUNT WHERE CountLogUUID=?";
+			
+			// set parameters with PreparedStatement
+			java.sql.PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, log.getInternalId().toString());
+			
+			// execute the statement and check whether user exists
+			ResultSet set = statement.executeQuery();
+			
+			while(set.next()) {
+				totalCount = set.getInt(1);
+			}
+			
+		}catch(SQLException exception) {
+			exception.printStackTrace();
+		}
+		return totalCount;
+	}
 }

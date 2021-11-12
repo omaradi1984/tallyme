@@ -82,7 +82,7 @@
         </ul>
 	</header>
         <div class="container" id="homeContainer">
-            <h1 class="title" id="number" name="number">number placeholder</h1>
+            <h1 class="title" id="number" name="totalCount">${totalCount}</h1>
                 <form name="form" action="count" method="post">
                     <div id="buttonContainer">
                         

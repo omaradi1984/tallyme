@@ -31,6 +31,8 @@ public interface ApplicationService {
     
     public void createCount(Count count, CountLog log);
     
+    public int readCount(CountLog log);
+    
     public void deleteCount(CountLog log);
     
     public void createCountLog(CountLog log, User user);
