@@ -201,4 +201,10 @@ public class ApplicationInMemory implements ApplicationService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public int readCount(CountLog log) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
