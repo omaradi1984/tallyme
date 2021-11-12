@@ -68,5 +68,5 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 LOCK TABLES `USER` WRITE;
-INSERT INTO `USER` VALUES ('ac299eb1-599e-4599-b22b-95e889448793','','Omar','Zohouradi', 'zoho0003@algonquinlive.com', 'zoho0003', '123456'),('d2bbd408-2836-4c96-92b2-0d44210e8502','','John','Deer', 'jdeer123@algonquinlive.com', 'jdeer123', '123456');
+INSERT INTO `USER` VALUES ('ac299eb1-599e-4599-b22b-95e889448793','Omar','Zohouradi', 'zoho0003', '123456', 'zoho0003@algonquinlive.com'),('d2bbd408-2836-4c96-92b2-0d44210e8502', 'John','Deer', 'jdeer123', '987654', 'jdeer123@somemail.com');
 UNLOCK TABLES;
