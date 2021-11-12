@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.beans.User;
-import com.test.dao.ApplicationDaoUser;
+import com.test.dao.ApplicationDao;
 
 /**
  * Servlet implementation class ProfileServlet
@@ -33,11 +33,11 @@ public class ProfileServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		//get the username from the session
-		System.out.println("User name in profile servlet  :"+ request.getSession().getAttribute("username"));
+		System.out.println("Username in profile servlet  :"+ request.getSession().getAttribute("username"));
 		String username = (String)request.getSession().getAttribute("username");
 		
 		//call dao and get profile details
-		ApplicationDaoUser dao = new ApplicationDaoUser();
+		ApplicationDao dao = new ApplicationDao();
 		User user = dao.getProfileDetails(username);
 		
 		//store all information in request object

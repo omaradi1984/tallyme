@@ -10,8 +10,14 @@ public class CountLog extends ArrayList<Count> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final UUID internalId;
-	private int id;
+	private UUID internalId;
+	/**
+	 * @param internalId the internalId to set
+	 */
+	public void setInternalId(UUID internalId) {
+		this.internalId = internalId;
+	}
+
 	private Date timeStamp;
 	private String location;
 	//private User user;
@@ -25,7 +31,6 @@ public class CountLog extends ArrayList<Count> {
 	
 	public CountLog(int id, String location) {
 		this.internalId = UUID.randomUUID();
-		this.id = id;
 		this.timeStamp = new Date();
 		this.location = location;
 		//this.setUser(new Guest());
@@ -49,14 +54,6 @@ public class CountLog extends ArrayList<Count> {
 
 	public UUID getInternalId() {
 		return internalId;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.beans.User;
-import com.test.dao.ApplicationDaoUser;
+import com.test.dao.ApplicationDao;
 
 /**
  * Servlet implementation class RegisterUserServlet
@@ -52,7 +52,7 @@ public class SignupServlet extends HttpServlet {
 				
 
 		// call DAO layer and save the user object to DB
-		ApplicationDaoUser dao = new ApplicationDaoUser();
+		ApplicationDao dao = new ApplicationDao();
 		int rows = dao.registerUser(user);
 
 		// prepare an information message for user about the success or failure of the operation

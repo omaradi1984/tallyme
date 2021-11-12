@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.test.beans.*;
-import com.test.inmemory.ApplicationInMemoryUser;
-import com.test.services.ApplicationServiceUser;
+import com.test.inmemory.ApplicationInMemory;
+import com.test.services.ApplicationService;
 
 /**
  * Servlet implementation class SignupServlet
@@ -45,7 +45,7 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		ApplicationServiceUser users = openUsers();
+		ApplicationService users = openUsers();
 		
 		String internalId = request.getParameter("internalId");
 		String firstName = "";
@@ -199,20 +199,20 @@ public class UserServlet extends HttpServlet {
         return out;
     }
 	
-	private ApplicationServiceUser openUsers() {
-        ApplicationServiceUser users;
+	private ApplicationService openUsers() {
+        ApplicationService users;
 
         ServletContext sc = getServletContext();
-        users = (ApplicationServiceUser) sc.getAttribute("users"); // getting attribute on context scope
+        users = (ApplicationService) sc.getAttribute("users"); // getting attribute on context scope
 
         if (users == null) {
-        	users = new ApplicationInMemoryUser();
+        	users = new ApplicationInMemory();
 //            logs = new ApplicationDao();
         }
         return users;
     }
 
-    private void closeUsers(ApplicationServiceUser users) {
+    private void closeUsers(ApplicationService users) {
         ServletContext sc = getServletContext();
         sc.setAttribute("users", users); // setting attribute on context scope
     }

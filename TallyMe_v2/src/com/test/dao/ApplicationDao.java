@@ -4,15 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.test.beans.Guest;
+import com.test.beans.Count;
+import com.test.beans.CountLog;
 import com.test.beans.User;
-import com.test.services.ApplicationServiceUser;
+import com.test.services.ApplicationService;
 
-public class ApplicationDaoUser implements ApplicationServiceUser {
+public class ApplicationDao implements ApplicationService {
 
 	@Override
 	public Map<UUID, User> readUsers() {
@@ -31,7 +33,7 @@ public class ApplicationDaoUser implements ApplicationServiceUser {
             // execute query, get resultset and return User info
             ResultSet set = statement.executeQuery();
             while (set.next()) {
-                user = new Guest();
+                user = new User();
                 user.setInternalId(UUID.fromString(set.getString("UUID")));
             	user.setFirstName(set.getString("FirstName"));
                 user.setLastName(set.getString("LastName"));
@@ -63,7 +65,7 @@ public class ApplicationDaoUser implements ApplicationServiceUser {
          // execute query, get resultset and return User info
             ResultSet set = statement.executeQuery();
             while (set.next()) {
-            	user = new Guest();
+            	user = new User();
             	user.setInternalId(UUID.fromString(set.getString("UUID")));
             	user.setFirstName(set.getString("FirstName"));
                 user.setLastName(set.getString("LastName"));
@@ -78,6 +80,37 @@ public class ApplicationDaoUser implements ApplicationServiceUser {
             exception.printStackTrace();
         }
         return user;
+	}
+	
+	public User readUser(String username, String password) {
+		User user = null;
+		try {
+
+			// get the connection for the database
+			Connection connection = DBConnection.getConnectionToDatabase();
+
+			// write the select query
+			String sql = "select * from USER where username=? and password=?";
+
+			// set parameters with PreparedStatement
+			java.sql.PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, username);
+			statement.setString(2, password);
+
+			ResultSet set = statement.executeQuery();
+            while (set.next()) {
+            	user = new User();
+            	user.setInternalId(UUID.fromString(set.getString("UUID")));
+            	user.setFirstName(set.getString("FirstName"));
+                user.setLastName(set.getString("LastName"));
+                user.setUsername(set.getString("Username"));
+                user.setPassword(set.getString("Password"));
+                user.setEmailAddress(set.getString("EmailAddress"));
+            }
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		return user;
 	}
 
 	@Override
@@ -254,4 +287,145 @@ public class ApplicationDaoUser implements ApplicationServiceUser {
 		return user;
 	}
 
+	@Override
+	public void createCount(Count count, CountLog log) {
+		// TODO Auto-generated method stub
+		try {
+			// get connection to database
+	        Connection connection = DBConnection.getConnectionToDatabase();
+
+	        // write select query to get the user
+	        String sql = "insert into COUNT (UUID, Timestamp, CountLogUUID) values (?, ?, ?);";
+	        PreparedStatement statement = connection.prepareStatement(sql);
+	        statement.setString(1, count.getInternalId().toString());
+			statement.setString(2, count.getTimeStamp().toString());
+			statement.setString(3, log.getInternalId().toString());
+
+	        // execute query, update resultset
+	        statement.execute();
+
+	    } catch (SQLException exception) {
+	        exception.printStackTrace();
+	    } catch (Exception exception) {
+	        exception.printStackTrace();
+	    }
+	}
+
+	@Override
+	public void deleteCount(CountLog log) {
+		// TODO Auto-generated method stub
+		try {
+            // get connection to database
+            Connection connection = DBConnection.getConnectionToDatabase();
+
+            // write select query to get the log
+            String sql = "DELETE FROM tallyme.COUNT WHERE CountlogUUID =? ORDER BY timestamp desc limit 1;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, log.getInternalId().toString());
+
+            // execute query, delete resultset
+            statement.execute();
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+	}
+
+	@Override
+	public void createCountLog(CountLog log, User user) {
+		// TODO Auto-generated method stub
+			try {
+				// get connection to database
+		        Connection connection = DBConnection.getConnectionToDatabase();
+	
+		        // write select query to get the user
+		        String sql = "insert into COUNTLOG (UUID, Timestamp, Location, UserUUID) values (?, ?, ?, ?);";
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setString(1, log.getInternalId().toString());
+				statement.setString(2, log.getTimeStamp().toString());
+				statement.setString(3, "Ottawa");//log.getLocation()
+				statement.setString(4, user.getInternalId().toString());
+	
+		        // execute query, update resultset
+		        statement.execute();
+
+		    } catch (SQLException exception) {
+		        exception.printStackTrace();
+		    } catch (Exception exception) {
+		        exception.printStackTrace();
+		    }
+	}
+
+	@Override
+	public void deleteCountLog(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CountLog readCountLog(String id, String userId) {
+		// TODO Auto-generated method stub
+		CountLog log = null;
+		try {
+
+			// get the connection for the database
+			Connection connection = DBConnection.getConnectionToDatabase();
+
+			// write the select query
+			String sql = "SELECT * FROM COUNTLOG WHERE UUID=? and UserUUID=?";
+
+			// set parameters with PreparedStatement
+			java.sql.PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, id);
+			statement.setString(2, userId);
+
+			ResultSet set = statement.executeQuery();
+            while (set.next()) {
+            	log = new CountLog();
+            	log.setInternalId(UUID.fromString(set.getString("UUID")));
+            	log.setTimeStamp(set.getDate("Timestamp"));
+            	log.setLocation(set.getString("Location"));
+            }
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		return log;
+	}
+
+	@Override
+	public CountLog readCountLog(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean validateCountLog(CountLog log, User user) {
+		// TODO Auto-generated method stub
+		boolean isValidLog = false;
+		try {
+
+			// get the connection for the database
+			Connection connection = DBConnection.getConnectionToDatabase();
+
+			// write the select query
+			String sql = "SELECT * FROM COUNTLOG WHERE UUID=? and UserUUID=?";
+
+			// set parameters with PreparedStatement
+			java.sql.PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, log.getInternalId().toString());
+			statement.setString(2, user.getInternalId().toString());
+
+			// execute the statement and check whether user exists
+
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				isValidLog = true;
+			}
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		return isValidLog;
+	}
 }
