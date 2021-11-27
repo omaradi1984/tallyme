@@ -5,29 +5,30 @@ import java.util.UUID;
 
 import com.test.beans.Count;
 import com.test.beans.CountLog;
-import com.test.beans.User;
+import com.test.beans.PublicUser;
+import com.test.beans.UserInterface;
 
 public interface ApplicationService {
 	
-	public Map<UUID, User> readUsers();
+	public Map<UUID, PublicUser> readUsers();
 	
-	public User readUser(String id);
+	public UserInterface readUser(String id);
 	
-	public User readUser(String username, String password);
+	public UserInterface readUser(String username, String password);
 	
-	public void createUser(User user);
+	public void createUser(PublicUser user);
 	
-	public void updateUser(User user);
+	public void updateUser(PublicUser user);
 
     public void deleteUser(String id);
 
-    public void createOrUpdateUser(User user);
+    public void createOrUpdateUser(PublicUser user);
     
     public boolean validateUser(String username, String password);
     
-    public int registerUser(User user);
+    public int registerUser(UserInterface user);
         
-    public User getProfileDetails(String username);
+    public UserInterface getProfileDetails(String username);
     
     public void createCount(Count count, CountLog log);
     
@@ -35,13 +36,13 @@ public interface ApplicationService {
     
     public void deleteCount(CountLog log);
     
-    public void createCountLog(CountLog log, User user);
+    public void createCountLog(CountLog log, UserInterface user);
     
     public CountLog readCountLog(String id, String userId);
     
     public CountLog readCountLog(String id);
     
-    public boolean validateCountLog(CountLog log, User user);
+    public boolean validateCountLog(CountLog log, UserInterface user);
     
     public void deleteCountLog(String id);
     

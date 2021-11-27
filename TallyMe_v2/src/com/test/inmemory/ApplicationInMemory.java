@@ -10,38 +10,39 @@ import java.util.UUID;
 
 import com.test.beans.Count;
 import com.test.beans.CountLog;
-import com.test.beans.User;
+import com.test.beans.PublicUser;
+import com.test.beans.UserInterface;
 import com.test.dao.DBConnection;
 import com.test.services.ApplicationService;
 
 public class ApplicationInMemory implements ApplicationService {
 	
-	private Map<UUID, User> users;
+	private Map<UUID, PublicUser> users;
 
 	public ApplicationInMemory() {
-		this.users = new LinkedHashMap<UUID, User>();
+		this.users = new LinkedHashMap<UUID, PublicUser>();
 	}
 
 	@Override
-	public Map<UUID, User> readUsers() {
+	public Map<UUID, PublicUser> readUsers() {
 		// TODO Auto-generated method stub
 		return users;
 	}
 
 	@Override
-	public User readUser(String id) {
+	public UserInterface readUser(String id) {
 		// TODO Auto-generated method stub
 		return users.get(UUID.fromString(id));
 	}
 
 	@Override
-	public void createUser(User user) {
+	public void createUser(PublicUser user) {
 		// TODO Auto-generated method stub
 		updateUser(user);
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(PublicUser user) {
 		// TODO Auto-generated method stub
 		users.put(user.getInternalId(), user);
 	}
@@ -53,9 +54,9 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public void createOrUpdateUser(User user) {
+	public void createOrUpdateUser(PublicUser user) {
 		// TODO Auto-generated method stub
-		User localUser = readUser(user.getInternalId().toString());
+		UserInterface localUser = readUser(user.getInternalId().toString());
         if (localUser == null) {
             createUser(user);
         } else {
@@ -93,7 +94,7 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public int registerUser(User user) {
+	public int registerUser(UserInterface user) {
 		// TODO Auto-generated method stub
 		int rowsAffected = 0;
 
@@ -122,9 +123,9 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public User getProfileDetails(String username) {
+	public UserInterface getProfileDetails(String username) {
 		// TODO Auto-generated method stub
-		User user = null;
+		UserInterface user = null;
 			try {
 				// get connection to database
 				Connection connection = DBConnection.getConnectionToDatabase();
@@ -137,7 +138,7 @@ public class ApplicationInMemory implements ApplicationService {
 				// execute query, get resultset and return User info
 				ResultSet set = statement.executeQuery();
 				while (set.next()) {
-					user = new User();
+					user = new PublicUser();
 					user.setFirstName(set.getString("FirstName"));
 					user.setLastName(set.getString("LastName"));
 					user.setUsername(set.getString("Username"));
@@ -167,7 +168,7 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public void createCountLog(CountLog log, User user) {
+	public void createCountLog(CountLog log, UserInterface user) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -179,7 +180,7 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public User readUser(String username, String password) {
+	public UserInterface readUser(String username, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -197,7 +198,7 @@ public class ApplicationInMemory implements ApplicationService {
 	}
 
 	@Override
-	public boolean validateCountLog(CountLog log, User user) {
+	public boolean validateCountLog(CountLog log, UserInterface user) {
 		// TODO Auto-generated method stub
 		return false;
 	}

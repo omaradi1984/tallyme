@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.test.beans.Count;
 import com.test.beans.CountLog;
-import com.test.beans.User;
+import com.test.beans.UserInterface;
 import com.test.dao.ApplicationDao;
 
 /**
@@ -44,7 +44,7 @@ public class CountSevlet extends HttpServlet {
 		String username = request.getSession().getAttribute("username").toString();
 		String password = request.getSession().getAttribute("password").toString();
 		
-		User user = dao.readUser(username, password);
+		UserInterface user = dao.readUser(username, password);
 				
 		String buttonValue = request.getParameter("button");
 		String add = "addCount";

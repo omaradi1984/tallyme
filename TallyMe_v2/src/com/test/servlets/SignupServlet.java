@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.test.beans.User;
+
+import com.test.beans.PublicUserBuilder;
+import com.test.beans.UserInterface;
 import com.test.dao.ApplicationDao;
 
 /**
@@ -45,8 +47,8 @@ public class SignupServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		// fill it up in a User bean
-		User user = new User(firstName, lastName, username, password, emailAddress);
-				
+		//PublicUser user = new PublicUser(firstName, lastName, username, password, emailAddress);
+		UserInterface user = new PublicUserBuilder().setFirstName(firstName).setLastName(lastName).setUsername(username).setPassword(password).setEmailAddress(emailAddress).createUser();		
 				
 
 		// call DAO layer and save the user object to DB

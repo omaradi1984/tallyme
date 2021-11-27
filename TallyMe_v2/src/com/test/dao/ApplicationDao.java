@@ -11,16 +11,17 @@ import java.util.UUID;
 
 import com.test.beans.Count;
 import com.test.beans.CountLog;
-import com.test.beans.User;
+import com.test.beans.PublicUser;
+import com.test.beans.UserInterface;
 import com.test.services.ApplicationService;
 
 public class ApplicationDao implements ApplicationService {
 
 	@Override
-	public Map<UUID, User> readUsers() {
+	public Map<UUID, PublicUser> readUsers() {
 		// TODO Auto-generated method stub
-		User user = null;
-		Map<UUID, User> users = new LinkedHashMap<UUID, User>();
+		PublicUser user = null;
+		Map<UUID, PublicUser> users = new LinkedHashMap<UUID, PublicUser>();
 		
 		try {
 			// get connection to database
@@ -33,7 +34,7 @@ public class ApplicationDao implements ApplicationService {
             // execute query, get resultset and return User info
             ResultSet set = statement.executeQuery();
             while (set.next()) {
-                user = new User();
+                user = new PublicUser();
                 user.setInternalId(UUID.fromString(set.getString("UUID")));
             	user.setFirstName(set.getString("FirstName"));
                 user.setLastName(set.getString("LastName"));
@@ -50,9 +51,9 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public User readUser(String id) {
+	public UserInterface readUser(String id) {
 		// TODO Auto-generated method stub
-		User user = null;
+		UserInterface user = null;
         try {
             // get connection to database
             Connection connection = DBConnection.getConnectionToDatabase();
@@ -65,7 +66,7 @@ public class ApplicationDao implements ApplicationService {
          // execute query, get resultset and return User info
             ResultSet set = statement.executeQuery();
             while (set.next()) {
-            	user = new User();
+            	user = new PublicUser();
             	user.setInternalId(UUID.fromString(set.getString("UUID")));
             	user.setFirstName(set.getString("FirstName"));
                 user.setLastName(set.getString("LastName"));
@@ -82,15 +83,15 @@ public class ApplicationDao implements ApplicationService {
         return user;
 	}
 	
-	public User readUser(String username, String password) {
-		User user = null;
+	public UserInterface readUser(String username, String password) {
+		UserInterface user = null;
 		try {
 
 			// get the connection for the database
 			Connection connection = DBConnection.getConnectionToDatabase();
 
 			// write the select query
-			String sql = "select * from USER where username=? and password=?";
+			String sql = "SELECT * FROM USER WHERE Username=? and Password=?";
 
 			// set parameters with PreparedStatement
 			java.sql.PreparedStatement statement = connection.prepareStatement(sql);
@@ -99,7 +100,7 @@ public class ApplicationDao implements ApplicationService {
 
 			ResultSet set = statement.executeQuery();
             while (set.next()) {
-            	user = new User();
+            	user = new PublicUser();
             	user.setInternalId(UUID.fromString(set.getString("UUID")));
             	user.setFirstName(set.getString("FirstName"));
                 user.setLastName(set.getString("LastName"));
@@ -114,7 +115,7 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public void createUser(User user) {
+	public void createUser(PublicUser user) {
 		// TODO Auto-generated method stub
 		try {
 		// get connection to database
@@ -141,7 +142,7 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void updateUser(PublicUser user) {
 		// TODO Auto-generated method stub
 		
 		try {
@@ -192,9 +193,9 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public void createOrUpdateUser(User user) {
+	public void createOrUpdateUser(PublicUser user) {
 		// TODO Auto-generated method stub
-		User localUser = readUser(user.getInternalId().toString());
+		UserInterface localUser = readUser(user.getInternalId().toString());
         if (localUser == null) {
             createUser(user);
         } else {
@@ -229,7 +230,7 @@ public class ApplicationDao implements ApplicationService {
 		return isValidUser;
 	}
 	
-	public int registerUser(User user) {
+	public int registerUser(UserInterface user) {
 		int rowsAffected = 0;
 
 		try {
@@ -256,8 +257,8 @@ public class ApplicationDao implements ApplicationService {
 		return rowsAffected;
 	}
 
-	public User getProfileDetails(String username) {
-		User user = null;
+	public UserInterface getProfileDetails(String username) {
+		UserInterface user = null;
 		try {
 			// get connection to database
 			Connection connection = DBConnection.getConnectionToDatabase();
@@ -270,7 +271,7 @@ public class ApplicationDao implements ApplicationService {
 			// execute query, get resultset and return User info
 			ResultSet set = statement.executeQuery();
 			while (set.next()) {
-				user = new User();
+				user = new PublicUser();
 				user.setFirstName(set.getString("FirstName"));
 				user.setLastName(set.getString("LastName"));
 				user.setUsername(set.getString("Username"));
@@ -334,7 +335,7 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public void createCountLog(CountLog log, User user) {
+	public void createCountLog(CountLog log, UserInterface user) {
 		// TODO Auto-generated method stub
 			try {
 				// get connection to database
@@ -401,7 +402,7 @@ public class ApplicationDao implements ApplicationService {
 	}
 
 	@Override
-	public boolean validateCountLog(CountLog log, User user) {
+	public boolean validateCountLog(CountLog log, UserInterface user) {
 		// TODO Auto-generated method stub
 		boolean isValidLog = false;
 		try {

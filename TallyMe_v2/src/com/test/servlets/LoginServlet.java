@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.test.beans.User;
+import com.test.beans.UserInterface;
 import com.test.dao.ApplicationDao;
 
 /**
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 					HttpSession session = request.getSession();
 					
 					//call dao and get profile details
-					User user = dao.getProfileDetails(username);
+					UserInterface user = dao.getProfileDetails(username);
 					
 					//store all information in request object
 					request.setAttribute("user", user);

@@ -60,7 +60,7 @@ public class UserServlet extends HttpServlet {
 			internalId = "";
         } else {
             // Read the record from memory.
-            User user = users.readUser(internalId);
+            UserInterface user = users.readUser(internalId);
             if (user == null) {
                 // User not found, initialize id and continue with the rendering.
                 internalId = "";
@@ -160,7 +160,7 @@ public class UserServlet extends HttpServlet {
         return out;
     }
 
-	private String printOutBodyList(Map<UUID, User> users) {
+	private String printOutBodyList(Map<UUID, PublicUser> users) {
         // Body list top.
         String out = "\n" + "        <!-- Content Section-->\n" + "            <!-- Users-->\n"
                 + "            <div class=\"row\">\n";
@@ -172,7 +172,7 @@ public class UserServlet extends HttpServlet {
                 + "                        <th scope=\"col\" class=\"col-2\">Actions</th>\n"
                 + "                      </tr>\n" + "                    </thead>\n" + "                    <tbody>\n";
 
-        for (Map.Entry<UUID, User> user : users.entrySet()) {
+        for (Map.Entry<UUID, PublicUser> user : users.entrySet()) {
             out += printOutBodyUser(user.getValue().getInternalId().toString(), user.getValue().getFirstName(),
             		user.getValue().getLastName(), user.getValue().getEmailAddress(), user.getValue().getUsername(), user.getValue().getPassword());
         }
